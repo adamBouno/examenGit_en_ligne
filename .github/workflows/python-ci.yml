@@ -1,0 +1,35 @@
+name: Python CI - Adam's Ludo
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+    branches:
+      - main
+      - master
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Recuperer le code
+        uses: actions/checkout@v4
+
+      - name: Installer Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Installer les dependances
+        run: |
+          python -m pip install --upgrade pip
+          pip install pygame
+
+      - name: Verifier la syntaxe du jeu
+        run: python -m py_compile jeu.py
+
+      - name: Lancer les tests unitaires
+        run: python -m unittest
